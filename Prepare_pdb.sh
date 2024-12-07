@@ -106,7 +106,7 @@ echo "Missing residues and atoms filled successfully. Output saved as fixed.pdb.
 
 # Step 2: Assign Protonation States Using pdb2pqr
 echo "Step 2: Assigning protonation states with pdb2pqr..."
-pdb2pqr --ff="$FORCE_FIELD"  --clean  --with-ph="$PH"  fixed.pdb "$OUTPUT_PQR" 
+pdb2pqr --ff="$FORCE_FIELD"  --clean  --with-ph="$PH"  fixed.pdb "$OUTPUT_PQR" --clean --chain
 
 if [ $? -eq 0 ]; then
     echo "PDB preparation successful. Output saved to $OUTPUT_PQR"
@@ -126,4 +126,5 @@ else
     echo "Error during conversion with Open Babel. Check the PQR file format."
     exit 1
 fi
+
 

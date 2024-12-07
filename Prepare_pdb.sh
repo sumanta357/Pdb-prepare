@@ -27,8 +27,9 @@ function show_help {
 
 # Default values
 PH=7.0
-FORCE_FIELD="amber"
+FORCE_FIELD="AMBER"
 OUTPUT_PQR="prepared.pqr"
+ffout="AMBER"
 
 # Parse arguments
 while getopts "i:p:f:o:h" opt; do
@@ -85,7 +86,7 @@ fixer.findMissingAtoms()
 fixer.addMissingAtoms()
 
 # Add hydrogens for a neutral baseline (default pH)
-fixer.addMissingHydrogens()
+#fixer.addMissingHydrogens()
 
 # Save the fixed PDB file
 with open("fixed.pdb", "w") as f:
@@ -105,7 +106,7 @@ echo "Missing residues and atoms filled successfully. Output saved as fixed.pdb.
 
 # Step 2: Assign Protonation States Using pdb2pqr
 echo "Step 2: Assigning protonation states with pdb2pqr..."
-pdb2pqr --ff="$FORCE_FIELD" --with-ph="$PH" fixed.pdb "$OUTPUT_PQR"
+pdb2pqr --ff="$FORCE_FIELD"  --clean  --with-ph="$PH"  fixed.pdb "$OUTPUT_PQR" 
 
 if [ $? -eq 0 ]; then
     echo "PDB preparation successful. Output saved to $OUTPUT_PQR"
@@ -125,3 +126,4 @@ else
     echo "Error during conversion with Open Babel. Check the PQR file format."
     exit 1
 fi
+
